@@ -3,11 +3,14 @@ package com.example.matcha.web;
 import com.example.matcha.payload.request.LoginRequest;
 import com.example.matcha.payload.request.SignupRequest;
 import com.example.matcha.payload.response.JWTTokenSuccessResponse;
+import com.example.matcha.payload.response.MessageResponse;
 import com.example.matcha.security.JWTTokenProvider;
 import com.example.matcha.security.SecurityConstants;
 import com.example.matcha.services.UserService;
 import com.example.matcha.validations.ResponseErrorValidation;
 import org.apache.commons.lang3.ObjectUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +29,6 @@ import javax.validation.Valid;
 @RequestMapping("/api/auth")
 @PreAuthorize("permitAll()")
 public class AuthController {
-
-
     @Autowired
     private JWTTokenProvider jwtTokenProvider;
     @Autowired
@@ -40,13 +41,13 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity<Object> authenticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult bindingResult) {
         ResponseEntity<Object> errors = responseErrorValidation.mapValidationService(bindingResult);
-        if (ObjectUtils.isEmpty(errors)) return errors;
-
+        if (!ObjectUtils.isEmpty(errors)){
+            return errors;
+        }
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginRequest.getUsername(),
                 loginRequest.getPassword()
         ));
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = SecurityConstants.TOKEN_PREFIX + jwtTokenProvider.generateToken(authentication);
 
@@ -56,7 +57,7 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<Object> registerUser(@Valid @RequestBody SignupRequest signupRequest, BindingResult bindingResult) {
         ResponseEntity<Object> errors = responseErrorValidation.mapValidationService(bindingResult);
-        if (ObjectUtils.isEmpty(errors)) return errors;
+        if (!ObjectUtils.isEmpty(errors)) return errors;
         userService.createUser(signupRequest);
         return ResponseEntity.ok(new MessageResponse("User regisered successfully!"));
 

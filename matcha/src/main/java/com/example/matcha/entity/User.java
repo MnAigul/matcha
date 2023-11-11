@@ -40,7 +40,7 @@ public class User implements UserDetails {
     @Column(length = 3000)
     private String password;
 
-    @Column
+    @Column(name = "last_time_visit")
     @JsonFormat(pattern = "yyyy-mm-dd HH:mm:ss")
     private LocalDateTime lastTimeVisit;
 

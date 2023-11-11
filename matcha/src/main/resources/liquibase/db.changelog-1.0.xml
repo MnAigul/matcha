@@ -33,15 +33,12 @@
             </column>
 
             <column name="city" type="VARCHAR(100)">
-                <constraints nullable="false"/>
             </column>
 
-            <column name="lastTimeVisit" type="TIMESTAMP" defaultValue="CURRENT_TIMESTAMP()">
-                <constraints nullable="false"/>
+            <column name="last_time_visit" type="TIMESTAMP" defaultValue="now()">
             </column>
 
             <column name="birth" type="DATE">
-                <constraints nullable="false"/>
             </column>
 
 
