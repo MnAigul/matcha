@@ -1,4 +1,4 @@
 # matcha
 
-## jwt-auth - front React
+## jwt-auth - frontend React
 ## matcha - backend Java 
