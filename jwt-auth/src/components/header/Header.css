@@ -1,0 +1,24 @@
+.header {
+    position: 'fixed';
+    top: 0px;
+    width: 100%;
+    /* color: #665F55; */
+
+
+  }
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+button {
+    border: 0px;
+    background-color: #E1D4C9;
+    color: #665F55;
+    /* color: #665F55; */
+}
+h4 {
+    margin: 0;
+    color: #665F55;
+}

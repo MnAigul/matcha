@@ -1,0 +1,29 @@
+span {
+    display: inline-block;
+    border: 1px solid #665F55;
+    border-radius: 5px;
+    height: 25px;
+    align-text: center;
+    width: 150px;
+    background-color: #FFFF;
+    overflow: auto;
+}
+
+.profileAndPhoto {
+    display: flex;
+    flex-direction: row;
+    gap: 150px;
+    
+}
+
+.photo {
+    width: 300px;
+    height: 300px;
+    objectFit: cover;
+}
+
+.imageAndBut {
+    display: flex;
+    flex-direction: column;
+}
+

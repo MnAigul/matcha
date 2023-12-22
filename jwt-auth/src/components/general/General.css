@@ -1,0 +1,34 @@
+.but {
+    height: 70px;
+}
+
+
+.cards {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+/*
+.card {
+    border: 
+} */
+
+
+.card {
+    width: 400px;
+    border: 1px solid #FFF;
+    border-radius: 40px;
+    padding: 16px;
+    margin: 16px;
+    width: 200px;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
