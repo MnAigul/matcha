@@ -1,0 +1,169 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet id="1.0.0" author="aigul.mingazova">
+        <createTable tableName="users">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="name" type="VARCHAR(100)">
+            </column>
+
+            <column name="lastname" type="VARCHAR(100)">
+            </column>
+
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="bio" type="VARCHAR(4000)">
+            </column>
+
+            <column name="city" type="VARCHAR(100)">
+            </column>
+
+            <column name="last_time_visit" type="TIMESTAMP" defaultValue="now()">
+            </column>
+
+            <column name="birth" type="DATE">
+            </column>
+
+            <column name="photo" type="VARCHAR(4000)">
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.1" author="aigul.mingazova">
+        <createTable tableName="roles">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.2" author="aigul.mingazova">
+        <createTable tableName="user_roles">
+            <column name="user_id" type="BIGINT">
+            </column>
+
+            <column name="role_id" type="BIGINT">
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.3" author="aigul.mingazova">
+        <createTable tableName="blacklist">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="refresh_token" type="varchar(300)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.4" author="aigul.mingazova">
+        <addForeignKeyConstraint
+                baseColumnNames="user_id"
+                baseTableName="blacklist"
+                constraintName="FK_blacklist_users"
+                referencedColumnNames="id"
+                referencedTableName="users"/>
+    </changeSet>
+
+
+    <changeSet id="1.0.5" author="aigul.mingazova">
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="user_roles"
+                                 constraintName="fk_user_roles_user"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+
+    <changeSet id="1.0.6" author="aigul.mingazova">
+        <addForeignKeyConstraint baseColumnNames="role_id"
+                                 baseTableName="user_roles"
+                                 constraintName="fk_user_roles_roles"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="roles"/>
+    </changeSet>
+
+    <changeSet id="1.0.7" author="aigul.mingazova">
+        <insert tableName="roles">
+            <column name="name" value="ROLE_USER"/>
+        </insert>
+
+        <insert tableName="roles">
+            <column name="name" value="ROLE_ADMIN"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="1.0.8" author="aigul.mingazova">
+        <createTable tableName="event">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="title" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="event_date_time" type="TIMESTAMP">
+            </column>
+
+            <column name="address" type="VARCHAR(100)">
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.9" author="aigul.mingazova">
+        <createTable tableName="event_user">
+            <column name="event_id" type="BIGINT">
+            </column>
+
+            <column name="user_id" type="BIGINT">
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.10" author="aigul.mingazova">
+        <addForeignKeyConstraint baseColumnNames="event_id"
+                                 baseTableName="event_user"
+                                 constraintName="fk_event_user_event"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="event"/>
+    </changeSet>
+
+    <changeSet id="1.0.11" author="aigul.mingazova">
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="event_user"
+                                 constraintName="fk_event_user_user"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+</databaseChangeLog>
